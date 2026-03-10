@@ -27,7 +27,7 @@ Le modèle physique de données décrit la structure de la base de données et l
 
 Le script de création et de sauvegarde de la base de données se trouve dans :
 
-backup_paymybuddy.sql
+database/backup_paymybuddy.sql
 
 ## Auteur
 
