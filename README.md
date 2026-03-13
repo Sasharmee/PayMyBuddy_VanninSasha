@@ -23,6 +23,12 @@ Le modèle physique de données décrit la structure de la base de données et l
 
 ![MPD Diagram](docs/mdp_PayMyBuddy.png)
 
+## Base de données
+
+Le script de création et de sauvegarde de la base de données se trouve dans :
+
+database/backup_paymybuddy.sql
+
 ## Auteur
 
 Sasha Vannin
