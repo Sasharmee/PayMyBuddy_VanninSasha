@@ -44,8 +44,8 @@ public class TransactionController {
 
         transactionService.sendMoney(senderEmail,
                 dto.getReceiverEmail(),
-                dto.getAmount(),
-                dto.getDescription());
+                dto.getDescription(),
+                dto.getAmount());
 
         return "redirect:/transfer";
     }

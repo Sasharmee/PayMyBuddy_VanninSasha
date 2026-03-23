@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Relations</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="friend-page">
+
+<!-- NAVBAR -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- CONTENU -->
+<div class="friend-container">
+
+  <div class="friend-card">
+
+    <!-- FORM -->
+    <div class="friend-form">
+
+      <form th:action="@{/add_friends}" method="post" class="friend-form-row">
+
+        <div class="friend-input-bloc">
+
+          <label class="friend-input-bloc-label" for="friendEmail">
+            Chercher une relation
+          </label>
+
+          <input class="friend-input-bloc-choice"
+                 type="email"
+                 id="friendEmail"
+                 name="friendEmail"
+                 placeholder="Saisir une adresse mail"
+                 required>
+
+        </div>
+
+        <button type="submit">Ajouter</button>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

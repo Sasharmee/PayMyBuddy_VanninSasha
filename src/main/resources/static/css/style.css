@@ -1,0 +1,617 @@
+body{
+    margin:0;
+}
+
+/*======= Navbar ======*/
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding: 20px 80px;
+}
+
+.logo{
+    font-family:"Inter", sans-serif;
+    font-size:20px;
+    font-weight:500;
+}
+
+.menu{
+    display:flex;
+    gap:48px;
+}
+
+.menu a{
+
+    text-decoration:none;
+    color:#000000;
+
+    font-family:"Inter", sans-serif;
+    font-size:20px;
+    font-weight:400;
+    line-height:150%;
+}
+
+.menu a:hover{
+    color:#207FEE;
+}
+
+.menu a.active{
+    color:#207FEE;
+    font-weight:700;
+}
+
+/*=======Pages Login et Register======*/
+
+.auth-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:white;
+}
+
+/*carte login*/
+.auth-card{
+    width:500px;
+    height:688px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-direction:column;
+
+    padding-top:64px;
+    padding-bottom:106px;
+
+    background:white;
+    border: 1px solid #000000;
+
+    box-shadow:0px 4px 4px 0px #00000040;
+}
+.auth-middle{
+    display: flex;
+    align-items: center;
+
+}
+
+
+.auth-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*Login*/
+.auth-login .auth-form{
+    gap: 42px;
+}
+
+.auth-login .auth-middle{
+    margin-top: 114px;
+    margin-bottom:114px;
+}
+
+/*register*/
+.auth-register .auth-form{
+    gap: 21px;
+}
+
+.auth-register .auth-middle{
+    margin-top: 66px;
+    margin-bottom:102px;
+}
+
+
+/*bouton-orange*/
+.logo-button{
+    width:214px;
+    height:64px;
+
+    border-radius:8px;
+    border:none;
+
+    background:#F69F1D;
+
+    font-family:"Inter";
+    font-weight:700;
+    font-size:24px;
+    line-height:150%;
+    color:white;
+
+}
+
+/*cases inputs*/
+
+.auth-input{
+    width:295px;
+    height:60px;
+
+    border-radius:8px;
+    border:1px solid #E0E0E0;
+
+    box-shadow:0px 1px 2px 0px #0000000D;
+
+    font-family:Inter;
+    font-weight:700;
+    font-size:24px;
+    line-height:150%;
+}
+
+/*bouton bleu submit*/
+.auth-submit{
+    width:205px;
+    height:64px;
+
+    border-radius:8px;
+    border:none;
+
+    background:#207FEE;
+
+    box-shadow:0px 1px 2px 0px #0000000D;
+
+    font-family:Inter;
+    font-weight:700;
+    font-size:24px;
+    line-height:150%;
+
+    color:white;
+
+    cursor:pointer;
+}
+
+/*=======Page Transfer======*/
+
+/* Contenu global */
+.content-transfer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 120px 80px 96px; /* espace navbar + marge du bas */
+  box-sizing: border-box;
+}
+
+/* Formulaire de transfert */
+.transfer-form {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+/*select personne*/
+.transfer-form-select-personne{
+    box-sizing:border-box;
+    height: 81px;
+    width:399px;
+    padding: 8px 16px;
+
+    margin-top:60px;
+
+    border-radius: 8px;
+    border: 1px solid #E0E0E0;
+
+    background: white;
+
+    font-family: "Inter";
+    font-size: 24px;
+    font-weight:400;
+    color:#000000;
+
+    outline: none;
+}
+/*Description*/
+.transfer-form-input{
+    box-sizing:border-box;
+    height:81px;
+    width:382px;
+
+    margin-top:60px;
+
+    padding:12px 16px;
+
+    border-radius: 8px;
+    border: 1px solid #E0E0E0;
+
+    background:white;
+
+    font-family: "Inter";
+    font-size: 24px;
+    font-weight:400;
+    color:#000000;
+}
+
+/*choix du prix*/
+.transfer-form-select-prix{
+    box-sizing:border-box;
+    height: 121px;
+    width:189px;
+    padding: 8px 16px;
+
+    margin-top:45px;
+
+    border-radius: 8px;
+    border: 1px solid #E0E0E0;
+
+    background: white;
+
+    font-family: "Inter";
+    font-size: 24px;
+    font-weight:400;
+    color:#000000;
+
+    outline: none;
+}
+
+/*Bouton payer*/
+.transfer-form-button{
+    box-sizing:border-box;
+    height:88px;
+    width:120px;
+    padding:14px 24px;
+
+    margin-left:47px;
+    margin-top:62px;
+
+    border-radius: 8px;
+
+    box-shadow: 0px 1px 2px 0px #0000000D;
+
+    background:#207FEE;
+
+    font-family:"Inter"
+    font-size:16px;
+    font-weight:700;
+    color:white;
+
+    white-space:nowrap;
+
+    cursor:pointer;
+}
+
+
+/* Table des transactions */
+
+/* Conteneur de la table */
+.transfer-table {
+  width: 90%;
+  max-width: 1311px;
+  background: #fff;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* Titre */
+.transfer-table-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* Table */
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* En‑têtes */
+.transactions-table th {
+  font-size: 20px;
+  font-weight: 600;
+  padding-bottom: 12px;
+}
+
+/* Lignes */
+.transactions-table td {
+  font-size: 18px;
+  padding: 20px 0;
+  border-top: 1px solid #E0E0E0;
+}
+
+/* Colonnes*/
+
+/* Relations */
+.transactions-table th:nth-child(1),
+.transactions-table td:nth-child(1) {
+  width: 40%;
+  text-align: left;
+}
+
+/* Description */
+.transactions-table th:nth-child(2),
+.transactions-table td:nth-child(2) {
+  width: 50%;
+  text-align: left;
+}
+
+/* Montant */
+.transactions-table th:nth-child(3),
+.transactions-table td:nth-child(3) {
+  width: 10%;
+  text-align: right;
+}
+
+/* Couleurs montant */
+.amount-positive { color: #009900; }
+.amount-negative { color: #E63946; }
+
+/*=======Page Ajout relation ======*/
+
+.friend-page{
+    min-height:100vh;
+    background:white;
+
+    display:flex;
+    flex-direction:column;
+}
+
+.friend-container{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.friend-card{
+    width:100%;
+    height:300px;
+
+    display:flex;
+    align-items:center;
+    flex-direction:column;
+    justify-content:center;
+
+}
+/*bloc*/
+.friend-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.friend-form-row{
+    display:flex;
+    gap:16px;
+    align-items:center;
+
+}
+
+.friend-input-bloc{
+    display:flex;
+    flex-direction:column;
+
+}
+/*Chercher une relation*/
+
+.friend-input-bloc-label {
+    width: 452px;
+    height: 54px;
+    padding: 12px 16px;
+
+    font-family: "Inter";
+    font-size: 20px;
+    font-weight: 500;
+}
+/*Saisir une adresse mail*/
+.friend-input-bloc-choice {
+    width: 452px;
+    height: 54px;
+
+    padding: 12px 16px;
+
+    gap: 8px;
+
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+
+    font-family: "Inter";
+    font-size: 20px;
+    font-weight: 500;
+}
+
+/*bouton*/
+.friend-form-row button {
+    display:flex;
+    justify-items:center;
+    align-items:center;
+
+    height: 62px;
+    width: 151px;
+
+    padding: 24px 32px;
+
+    border-radius: 8px;
+    border: none;
+
+    margin-top:15px;
+
+    background: #F69F1D;
+
+    color:white;
+    font-family: "Inter";
+    font-weight: 500;
+    font-size: 24px;
+
+    cursor: pointer;
+}
+
+
+/*=======Page profil======*/
+
+.profile-page{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-form{
+    width:749px;
+    height:740px;
+
+}
+
+.profile-card{
+    display: flex;
+    width: 709px;
+    height: 317px;
+    margin-left: 40px;
+    margin-top: 119px;
+
+}
+
+.profile-card-username-row{
+    display: flex;
+    width: 527px;
+    height: 56px;
+    padding: 14px 16px;
+
+}
+
+.profile-card-username-label{
+    height: 28px;
+    width: 156px;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 20px;
+
+}
+
+.profile-card-username-input{
+    height: 28px;
+    width: 327px;
+
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 20px;
+    color: #000000;
+
+    border:none;
+
+    transform: translateY(-2px);
+}
+
+.profile-card-chevron-username{
+    width: 20px;
+    height: 20px;
+    opacity: 0.5;
+    position: absolute;
+    margin-left: 296px;
+
+    transform: translateY(2px);
+}
+
+
+.profile-card-mail-row{
+    display:flex;
+    width: 527px;
+    height: 56px;
+    padding: 14px 16px;
+}
+
+.profile-card-mail-label{
+    width: 156px;
+    height: 28px;
+    font-family: "Inter";
+    font-size: 20px;
+    font-weight: 500;
+}
+
+
+.profile-card-mail-input{
+    width: 231px;
+    height: 28px;
+
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 20px;
+
+    background:white;
+
+    border: none;
+
+    transform: translateY(-2px);
+}
+
+.profile-card-chevron-mail{
+    width: 20px;
+    height: 20px;
+    opacity: 0.5;
+    position: absolute;
+    margin-left: 395px;
+
+    transform: translateY(2px);
+}
+
+
+.profile-card-password-row{
+    display:flex;
+    width: 636px;
+    height: 92px;
+    padding: 14px 16px;
+}
+
+.profile-card-password-label{
+    height:28px;
+    width:156px;
+    font-size: 20px;
+    font-family: "Inter";
+    font-weight: 500;
+
+}
+
+.profile-card-password-input{
+    width: 277px;
+    height: 28px;
+    margin-right: 12px;
+
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 20px;
+
+    border: none;
+
+    transform: translateY(-2px);
+}
+
+.profile-card-chevron-password{
+    width: 20px;
+    height: 20px;
+    opacity: 0.5;
+    position: absolute;
+    margin-left: 395px;
+
+    transform: translateY(2px);
+}
+
+.profile-card-password-button{
+    width: 147px;
+    height: 64px;
+
+    padding: 14px 24px;
+
+    margin-top:14px;
+
+    background: #F69F1D;
+
+    box-shadow: 0px 1px 2px 0px #0000000D;
+
+    border-radius: 8px;
+    border:none;
+
+    font-family: "Inter";
+    font-weight: 700;
+    font-size: 24px;
+    color:white;
+    vertical-align: middle;
+
+}
+
+

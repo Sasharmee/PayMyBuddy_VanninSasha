@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<main class="profile-page">
+
+<div class="profile-form">
+  <div class="profile-card">
+<div th:if="${user != null}">
+
+  <form th:action="@{/update_profile}" method="post">
+
+    <div class="profile-card-username-row">
+    <label class="profile-card-username-label">Username</label>
+    <input class="profile-card-username-input" type="text" name="username" th:value="${user.username}">
+      <span class="profile-card-chevron-username">></span>
+    </div>
+
+    <div class="profile-card-mail-row">
+    <label class="profile-card-mail-label">Email</label>
+    <input class="profile-card-mail-input" type="email" th:value="${user.email}" disabled>
+      <span class="profile-card-chevron-mail">></span>
+    </div>
+
+    <div class="profile-card-password-row">
+    <label class="profile-card-password-label">Password</label>
+    <input class="profile-card-password-input" type="password" name="password">
+      <span class="profile-card-chevron-password">></span>
+
+      <button class="profile-card-password-button" type="submit">
+        Modifier
+      </button>
+
+    </div>
+
+  </form>
+
+
+
+</div>
+</div>
+</div>
+
+</main>
+</body>
+</html>

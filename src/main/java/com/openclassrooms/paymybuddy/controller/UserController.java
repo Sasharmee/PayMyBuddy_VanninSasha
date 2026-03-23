@@ -26,7 +26,7 @@ public class UserController {
 
         model.addAttribute("user", user);
 
-        return "user";
+        return "profile";
     }
 
     @PostMapping("/update_profile")

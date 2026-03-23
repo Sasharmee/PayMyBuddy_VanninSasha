@@ -17,11 +17,11 @@ public class TransferDTO {
         return receiverEmail;
     }
 
-    public String getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public BigDecimal getDescription() {
+    public String getDescription() {
         return description;
     }
 
