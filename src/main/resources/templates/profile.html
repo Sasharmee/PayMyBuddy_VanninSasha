@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <title>Profile</title>
 
+  <meta name="description" content="page de profil d'utilisateur de l'application de transfert d'argent entre amis Pay My Buddy">
+
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
@@ -21,20 +23,20 @@
   <form th:action="@{/update_profile}" method="post">
 
     <div class="profile-card-username-row">
-      <label class="profile-card-username-label">Username</label>
-      <input class="profile-card-username-input" type="text" name="username" th:value="${user.username}">
+      <label for="username" class="profile-card-username-label">Username</label>
+      <input id="username" class="profile-card-username-input" type="text" name="username" th:value="${user.username}">
       <span class="profile-card-chevron-username">></span>
     </div>
 
     <div class="profile-card-mail-row">
-    <label class="profile-card-mail-label">Email</label>
-    <input class="profile-card-mail-input" type="email" th:value="${user.email}" disabled>
+    <label for="email" class="profile-card-mail-label">Email</label>
+    <input id="email" class="profile-card-mail-input" type="email" th:value="${user.email}" disabled>
       <span class="profile-card-chevron-mail">></span>
     </div>
 
     <div class="profile-card-password-row">
-    <label class="profile-card-password-label">Password</label>
-    <input class="profile-card-password-input" type="password" name="password">
+    <label for="password" class="profile-card-password-label">Password</label>
+    <input id="password" class="profile-card-password-input" type="password" name="password">
       <span class="profile-card-chevron-password">></span>
 
       <button class="profile-card-password-button" type="submit">

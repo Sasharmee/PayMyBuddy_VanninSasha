@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org" lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <meta name="description" content="Page erreur de l'application de transfert d'argent entre amis Pay My Buddy">
+
+</head>
+
+<body>
+
+    <main class="error-page">
+
+        <h1>Une erreur est survenue</h1>
+
+        <p th:text="${error}">
+            Un problème est survenu
+        </p>
+
+        <a th:href="@{/transfer}" class="error-button">
+            Retour à l'accueil
+        </a>
+
+    </main>
+
+</body>
+</html>

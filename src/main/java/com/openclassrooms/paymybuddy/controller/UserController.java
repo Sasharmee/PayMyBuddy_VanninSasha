@@ -25,6 +25,7 @@ public class UserController {
         User user = userService.findByEmail(userEmail).orElseThrow(()->new IllegalArgumentException("User not found"));
 
         model.addAttribute("user", user);
+        model.addAttribute("activePage", "profile");
 
         return "profile";
     }

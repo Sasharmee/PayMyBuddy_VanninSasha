@@ -4,18 +4,22 @@ import com.openclassrooms.paymybuddy.entity.User;
 import com.openclassrooms.paymybuddy.service.UserRelationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserRelationController.class)
+@WithMockUser(username = "user@mail.com")
 public class UserRelationControllerTest {
 
     @Autowired
@@ -45,6 +49,7 @@ public class UserRelationControllerTest {
     void addFriend_shouldAddFriends() throws Exception{
 
         mockMvc.perform(post("/add_friends")
+                        .with(csrf())
                     .param("friendEmail", "friend@mail.com")
                     .principal(()->"user@mail.com"))
                 .andExpect(status().is3xxRedirection())
@@ -60,7 +65,8 @@ public class UserRelationControllerTest {
         doThrow(new IllegalArgumentException("Already friend"))
                 .when(userRelationService).addFriend("user@mail.com", "friend@mail.com");
 
-        mockMvc.perform(post("/add_friend")
+        mockMvc.perform(post("/add_friends")
+                        .with(csrf())
                     .param("friendEmail", "friend@mail.com")
                     .principal(()->"user@mail.com"))
                 .andExpect(status().isOk())

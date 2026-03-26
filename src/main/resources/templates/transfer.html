@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Transfer</title>
+
+    <meta name="description" content="Page de transfert de l'application de transfert d'argent entre amis Pay My Buddy">
+
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
@@ -11,26 +14,23 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <main class="content-transfer">
-    <section class="transfer-form-section">
         <form id="transferForm" th:action="@{/transfer}" method="post" class="transfer-form">
-
-            <select class="transfer-form-select-personne" name="receiverEmail">
+            <label for="personne" class="visually-hidden">Sélectionner une relation</label>
+            <select id="personne" class="transfer-form-select-personne" name="receiverEmail">
                 <option>Sélectionner une relation</option>
                 <option>voldy@mail.com</option>
                 <option>Lyséa</option>
             </select>
 
             <input class="transfer-form-input" type="text" name="description" placeholder="Description">
-
-            <select class="transfer-form-select-prix" name="amount">
-                <option value="0">0€</option>
+            <label for="montant" class="visually-hidden">0€</label>
+            <select id="montant" class="transfer-form-select-prix" name="amount">
                 <option value="10">10€</option>
                 <option value="20">20€</option>
             </select>
 
             <button type="submit" class="transfer-form-button">Payer</button>
         </form>
-    </section>
 
     <section class="transfer-table">
         <h2 class="transfer-table-title">Mes Transactions</h2>

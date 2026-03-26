@@ -33,6 +33,7 @@ public class TransactionController {
 
         model.addAttribute("sentTransactions", sentTransactions);
         model.addAttribute("receivedTransactions", receivedTransactions);
+        model.addAttribute("activePage", "transfer");
 
         return "transfer";
     }

@@ -27,6 +27,7 @@ public class UserRelationController {
         List<User> friends = userRelationService.getFriends(userEmail);
 
         model.addAttribute("friends", friends);
+        model.addAttribute("activePage", "friends");
 
         return "friends";
     }

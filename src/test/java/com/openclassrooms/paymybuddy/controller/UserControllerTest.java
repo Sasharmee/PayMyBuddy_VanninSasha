@@ -4,18 +4,22 @@ import com.openclassrooms.paymybuddy.entity.User;
 import com.openclassrooms.paymybuddy.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
+@WithMockUser(username = "user@mail.com")
 public class UserControllerTest {
 
     @Autowired
@@ -28,17 +32,17 @@ public class UserControllerTest {
     @Test
     void profile_shouldReturnProfilePage() throws Exception{
 
-        User user = new User("marco", "marco@mail.com", "7272");
+        User user = new User("user", "user@mail.com", "7272");
 
-        when(userService.findByEmail("marco@mail.com")).thenReturn(Optional.of(user));
+        when(userService.findByEmail("user@mail.com")).thenReturn(Optional.of(user));
 
         mockMvc.perform(get("/profile")
-                        .principal(()->"marco@mail.com"))
+                        .principal(()->"user@mail.com"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("profile"))
                 .andExpect(model().attributeExists("user"));
 
-        verify(userService).findByEmail("marco@mail.com");
+        verify(userService).findByEmail("user@mail.com");
     }
 
     //Test GET: utilisateur non retrouvé
@@ -62,6 +66,7 @@ public class UserControllerTest {
     void updateProfile_shouldUpdateProfileAndRedirectToProfilePage() throws Exception {
 
         mockMvc.perform(post("/update_profile")
+                        .with(csrf())
                         .param("username", "newName")
                         .param("password", "newPassword")
                         .principal(() -> "user@mail.com"))
@@ -84,6 +89,7 @@ public class UserControllerTest {
                 .updateUserInformations(any(), any(), any());
 
         mockMvc.perform(post("/update_profile")
+                        .with(csrf())
                 .param("username", "existingUser")
                 .param("password","1234")
                 .principal(()->"user@mail.com"))

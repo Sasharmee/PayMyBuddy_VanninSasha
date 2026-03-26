@@ -6,13 +6,24 @@
 
     <div class="menu">
 
-        <a th:href="@{/transfer}">Transférer</a>
+        <a th:href="@{/transfer}"
+           th:classappend="${activePage == 'transfer'} ? 'active'">
+            Transférer
+        </a>
 
-        <a th:href="@{/profile}">Profil</a>
+        <a th:href="@{/profile}"
+           th:classappend="${activePage == 'profile'} ? 'active'">
+            Profil
+        </a>
 
-        <a th:href="@{/friends}">Ajouter relation</a>
+        <a th:href="@{/friends}"
+           th:classappend="${activePage == 'friends'} ? 'active'">
+            Ajouter relation
+        </a>
 
-        <a th:href="@{/logout}">Se déconnecter</a>
+        <a th:href="@{/logout}">
+            Se déconnecter
+        </a>
 
     </div>
 

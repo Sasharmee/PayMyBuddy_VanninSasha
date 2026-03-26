@@ -22,6 +22,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "/robots.txt",
                                 "/api/auth/**",
                                 "/login",
                                 "/register",

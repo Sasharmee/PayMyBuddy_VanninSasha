@@ -4,20 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <title>Relations</title>
+
+  <meta name="description" content="page d'ajout de relation de l'application de transfert d'argent entre amis Pay My Buddy">
+
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body class="friend-page">
 
-<!-- NAVBAR -->
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<!-- CONTENU -->
+<main>
+
 <div class="friend-container">
 
   <div class="friend-card">
 
-    <!-- FORM -->
+
     <div class="friend-form">
 
       <form th:action="@{/add_friends}" method="post" class="friend-form-row">
@@ -45,6 +48,6 @@
   </div>
 
 </div>
-
+</main>
 </body>
 </html>

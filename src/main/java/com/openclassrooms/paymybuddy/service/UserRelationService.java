@@ -34,7 +34,7 @@ public class UserRelationService implements UserRelationInterface{
 
         if (user.getFriends().stream()
                 .anyMatch(f -> f.getId().equals(friend.getId()))){
-            throw new IllegalArgumentException("ALready friend");}
+            throw new IllegalArgumentException("Already friend");}
 
         user.getFriends().add(friend);
 
