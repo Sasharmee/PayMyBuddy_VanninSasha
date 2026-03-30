@@ -17,6 +17,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * Tests unitaires du service UserRelationService.
+ * <p>
+ * Vérifie la gestion des relations entre utilisateurs.
+ * Utilise Mockito pour isoler le service et simuler les dépendances.
+ */
 @ExtendWith(MockitoExtension.class)
 public class UserRelationServiceTest {
 
@@ -29,6 +35,9 @@ public class UserRelationServiceTest {
     private User currentUser;
     private User friend;
 
+    /**
+     * Initialise les données de test.
+     */
     @BeforeEach
     void setUp(){
         currentUser = new User("currentUser", "currentUser@mail.com", "1234");
@@ -39,7 +48,9 @@ public class UserRelationServiceTest {
         friend.setFriends(new ArrayList<>());
     }
 
-    //Happy Path : cas normal ou les deux utilisateurs existent et la relation est sauvegardée
+    /**
+     * Vérifie que l'ajout de la relation a correctement lieu.
+     */
     @Test
     void addFriend_whenUsersAreValid_savesRelation() {
         when(userRepository.findByEmail("currentUser@mail.com")).thenReturn(Optional.of(currentUser));
@@ -51,7 +62,9 @@ public class UserRelationServiceTest {
 
     }
 
-    //Test lorsqu'un des deux utilisateurs est introuvable
+    /**
+     * Vérifie qu'une exception est levée lorsqu'un utilisateur n'est pas trouvé.
+     */
     @Test
     void addFriend_userNotFound_throwsException() {
         when(userRepository.findByEmail("currentUser@mail.com")).thenReturn(Optional.empty()
@@ -62,7 +75,9 @@ public class UserRelationServiceTest {
         assertEquals("User not found", exception.getMessage());
     }
 
-    //Test lorsque l'utilisateur essaie de s'ajouter lui-même
+    /**
+     * Vérifie qu'une exception est levée lorsqu'un utilisateur souhaite s'ajouter lui-même.
+     */
     @Test
     void addFriend_addHimself_throwsException() {
         when(userRepository.findByEmail("currentUser@mail.com")).thenReturn(Optional.of(currentUser));
@@ -74,6 +89,9 @@ public class UserRelationServiceTest {
         assertEquals("You cannot add yourself", exception.getMessage());
     }
 
+    /**
+     * Vérifie qu'une exception est levée lorsque les utilisateurs sont déjà amis.
+     */
     @Test
     void addFriend_alreadyFriend_throwsException() {
         currentUser.getFriends().add(friend);
@@ -87,7 +105,9 @@ public class UserRelationServiceTest {
         assertEquals("Already friend", exception.getMessage());
     }
 
-    //Test happy path getFriends
+    /**
+     * Vérifie que la liste des amis est correctement retournée.
+     */
     @Test
     void getFriends_whenUserIsValid_returnsListOfFriends() {
 
@@ -101,7 +121,9 @@ public class UserRelationServiceTest {
         assertTrue(friends.contains(friend));
     }
 
-    //Test lorsqu'on ne retrouve pas l'utilisateur dont on cherche les amis
+    /**
+     * Vérifie qu'une exception est levée lorsque l'utilisateur n'est pas trouvé.
+     */
     @Test
     void getFriend_userNotFound_throwsException() {
         when(userRepository.findByEmail("currentUser@mail.com")).thenReturn(Optional.empty());

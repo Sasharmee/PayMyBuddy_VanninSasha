@@ -18,6 +18,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Tests unitaires du contrôleur UserController.
+ * <p>
+ * Vérifie l'affichage du profil utilisateur ainsi que la mise à jour du profil.
+ * Utilise MockMvc pour simuler les requêtes HTTP et Mockito pour simuler le service.
+ */
 @WebMvcTest(UserController.class)
 @WithMockUser(username = "user@mail.com")
 public class UserControllerTest {
@@ -28,7 +34,11 @@ public class UserControllerTest {
     @MockitoBean
     private UserService userService;
 
-    //Test GET: Happy path récupération profil
+    /**
+     * Vérifie que la page profil est correctement affichée.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
     @Test
     void profile_shouldReturnProfilePage() throws Exception{
 
@@ -45,7 +55,11 @@ public class UserControllerTest {
         verify(userService).findByEmail("user@mail.com");
     }
 
-    //Test GET: utilisateur non retrouvé
+    /**
+     * Vérifie que la page d'erreur est affichée lorsque l'utilisateur n'est pas retrouvé.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
     @Test
     void profile_whenUserIsNotFound_shouldReturnErrorPage() throws Exception{
 
@@ -61,7 +75,11 @@ public class UserControllerTest {
         verify(userService).findByEmail("user@mail.com");
     }
 
-    //Test POST: happy path - mise à jour du profil réussie
+    /**
+     * Vérifie que la mise à jour a correctement lieu et que l'utilisateur est redirigé vers la page profil.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
     @Test
     void updateProfile_shouldUpdateProfileAndRedirectToProfilePage() throws Exception {
 
@@ -80,7 +98,12 @@ public class UserControllerTest {
         );
     }
 
-    //Test POST: lorsque le nouveau username est déjà utilisé -> error page
+    /**
+     * Vérifie que la page erreur est affichée
+     * lorsque l'utilisateur souhaite modifier son nom d'utilisateur par un étant déjà utilisé.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
     @Test
     void updateProfile_whenUsernameIsAlreadyUsed_shouldReturnErrorPage() throws Exception{
 

@@ -17,6 +17,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Tests unitaires du contrôleur AuthController.
+ * <p>
+ * Vérifie le bon fonctionnement des endpoints liés à l'authentification :
+ * affichage des pages et gestion de l'inscription.
+ * <p>
+ * Utilisation de MockMvc afin de simuler les requêtes HTTP et mockito pour simuler le service.
+ */
 @WebMvcTest(AuthController.class)
 @AutoConfigureMockMvc(addFilters = false)
 public class AuthControllerTest {
@@ -27,7 +35,11 @@ public class AuthControllerTest {
     @MockitoBean
     private UserService userService;
 
-    //Test GET: Happy path login
+    /**
+     * Vérification que la page connexion s'affiche correctement.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
     @Test
     void login_shouldReturnLoginPage() throws Exception {
 
@@ -36,7 +48,11 @@ public class AuthControllerTest {
                 .andExpect(view().name("login"));
     }
 
-    //Test GET: Happy path register
+    /**
+     * Vérification que la page d'inscription s'affiche correctement.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
     @Test
     void register_shouldReturnRegisterPage() throws Exception{
 
@@ -45,7 +61,12 @@ public class AuthControllerTest {
                 .andExpect(view().name("register"));
     }
 
-    //Test POST: happy path register - inscription réussie
+    /**
+     * Vérifie que l'enregistrement est un succès
+     * et que la redirection vers la page de connexion s'effectue correctement.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
     @Test
     void registerUser_shouldRegisterAndReturnToLoginPage() throws Exception{
 
@@ -63,7 +84,11 @@ public class AuthControllerTest {
         );
     }
 
-    //Test POST : erreur lors de l'inscription
+    /**
+     * Vérifie que lorsqu'il y a une erreur lors de l'enregistrement il y a la redirection vers la page erreur.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
     @Test
     void registerUser_whenError_shouldReturnErrorPage() throws Exception{
 

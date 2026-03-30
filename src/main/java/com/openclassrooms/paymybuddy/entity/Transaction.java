@@ -5,36 +5,73 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Entité représentant une transaction entre deux utilisateurs.
+ * <p>
+ * Une transaction est un transfert d'argent d'un utilisateur à un autre allant d'un utilisateur,
+ * à un autre, ayant un montant, une description et une date de création.
+ *
+ */
 @Entity
 @Table(name = "transaction")
 public class Transaction {
-
+    /**
+     * Identifiant unique de la transaction.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Integer id;
 
+    /**
+     * Description associée à la transaction.
+     */
     @Column(length = 255, nullable = false)
     private String description;
 
-
+    /**
+     * Montant de la transaction.
+     * <p>
+     * Utilise BigDecimal afin de garantir la précision des calculs financiers.
+     */
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
+    /**
+     * Date et heure de création de la transaction.
+     */
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    /**
+     * Utilisateur expéditeur de la transaction.
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_sender_id")
     private User sender;
 
+    /**
+     * Utilisateur destinataire de la transaction.
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_receiver_id")
     private User receiver;
 
+    /**
+     * Constructeur par défaut.
+     */
     public Transaction() {
     }
 
+    /**
+     * Constructeur complet d'une transaction.
+     *
+     * @param description description de la transaction
+     * @param amount montant de la description
+     * @param createdAt date et heure de création de la transaction
+     * @param sender expéditeur de la transaction
+     * @param receiver destinataire de la transaction
+     */
     public Transaction(String description, BigDecimal amount, LocalDateTime createdAt, User sender, User receiver) {
         this.description = description;
         this.amount = amount;

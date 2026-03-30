@@ -21,6 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * Tests unitaires du service TransactionService.
+ * <p>
+ * Vérifie la logique métier liée aux transactions.
+ * Utilise Mockito pour isoler le service et simuler les différentes dépendances.
+ */
 @ExtendWith(MockitoExtension.class)
 public class TransactionServiceTest {
 
@@ -36,6 +42,9 @@ public class TransactionServiceTest {
     private User sender;
     private User receiver;
 
+    /**
+     * Initialisation des données de test.
+     */
     @BeforeEach
     void setUp() {
         sender = new User("sender" , "sender@mail.com", "1234");
@@ -49,7 +58,9 @@ public class TransactionServiceTest {
         sender.getFriends().add(receiver);
     }
 
-    //Test happy path de la transaction
+    /**
+     * Vérifie qu'une transaction a correctement lieu et est enregistrée.
+     */
     @Test
     void sendMoney_whenDataAreValid_savesTransaction() {
         when(userRepository.findByEmail("sender@mail.com")).thenReturn(Optional.of(sender));
@@ -60,7 +71,9 @@ public class TransactionServiceTest {
         verify(transactionRepository).save(any(Transaction.class));
     }
 
-    //Test lorsque l'utilisateur n'est pas retrouvé
+    /**
+     * Vérifie qu'une exception est levée lorsque l'utilisateur n'est pas trouvé.
+     */
     @Test
     void sendMoney_whenUserIsNotFound_throwsException() {
         when(userRepository.findByEmail("sender@mail.com")).thenReturn(Optional.empty());
@@ -72,7 +85,9 @@ public class TransactionServiceTest {
         verify(transactionRepository, never()).save(any());
     }
 
-    //Test lorsque l'utilisateur essaie de s'envoyer de l'argent à lui-même
+    /**
+     * Vérifie qu'une exception est levée lorsque l'utilisateur essaie de se faire une transaction à lui-même.
+     */
     @Test
     void sendMoney_whenUserSendToHimself_throwsException() {
         when(userRepository.findByEmail("sender@mail.com")).thenReturn(Optional.of(sender));
@@ -84,7 +99,9 @@ public class TransactionServiceTest {
         verify(transactionRepository, never()).save(any());
     }
 
-    //Test lorsque les utilisateurs ne sont pas amis
+    /**
+     * Vérifie qu'une exception est levée lorsque les utilisateurs ne sont pas amis.
+     */
     @Test
     void sendMoney_whenUsersAreNotFriends_throwsException() {
         sender.getFriends().clear();
@@ -99,7 +116,9 @@ public class TransactionServiceTest {
 
     }
 
-    //Test lorsque le montant envoyé est négatif ou nul
+    /**
+     * Vérifie qu'une exception est levée lorsque le montant n'est pas strictement positif.
+     */
     @Test
     void sendMoney_whenAmountIsNotPositive_throwsException() {
         when(userRepository.findByEmail("sender@mail.com")) .thenReturn(Optional.of(sender));
@@ -112,7 +131,9 @@ public class TransactionServiceTest {
         verify(transactionRepository, never()).save(any());
     }
 
-    //Test happy path récupération liste argent des transactions envoyées
+    /**
+     * Vérifie que la liste des transactions effectuées est retournée.
+     */
     @Test
     void getSentTransactions_whenUserIsValid_shouldReturnListOfSentTransactions() {
         List<Transaction> transactions = List.of(new Transaction());
@@ -125,7 +146,9 @@ public class TransactionServiceTest {
 
     }
 
-    //Test lorsque l'utilisateur n'est pas retrouvé
+    /**
+     * Vérifie qu'une exception est levée lorsque l'utilisateur n'est pas retrouvé.
+     */
     @Test
     void getSentTransactions_whenUserIsNotFound_throwsException() {
         when(userRepository.findByEmail("sender@mail.com")).thenReturn(Optional.empty());
@@ -138,7 +161,9 @@ public class TransactionServiceTest {
 
     }
 
-    //Test happy path récupération des transactions reçues
+    /**
+     * Vérifie que les transactions reçues sont correctement retournées.
+     */
     @Test
     void getReceivedTransactions_whenUserIsValid_shouldReturnListOfReceivedTransactions() {
         List<Transaction> transactions = List.of(new Transaction());
@@ -150,7 +175,9 @@ public class TransactionServiceTest {
         assertEquals(1, result.size());
     }
 
-    //Test lorsque l'utilisateur n'est pas retrouvé
+    /**
+     * Vérifie qu'une exception est levée lorsque l'utilisateur n'est pas retrouvé.
+     */
     @Test
     void getReceivedTransactions_whenUserIsNotFound_throwsException() {
         when(userRepository.findByEmail("receiver@mail.com")).thenReturn(Optional.empty());

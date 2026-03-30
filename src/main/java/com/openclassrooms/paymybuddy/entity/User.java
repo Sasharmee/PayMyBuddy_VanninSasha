@@ -5,24 +5,46 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entité représentant un utilisateur de l'application Pay My Buddy.
+ * <p>
+ *Un utilisateur possède des informations personnelles, une liste de relation et l'historique de ses transactions.
+ */
 @Entity
 @Table(name = "user")
 public class User {
 
+    /**
+     * Identifiant unique de l'utilisateur.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Integer id;
 
+    /**
+     * Nom de l'utilisateur unique.
+     */
     @Column(length = 100,unique = true, nullable = false)
     private String username;
 
+    /**
+     * Adresse mail unique de l'utilisateur.
+     */
     @Column(length = 255,unique = true, nullable = false)
     private String email;
 
+    /**
+     * Mot de passe de l'utilisateur.
+     */
     @Column(length = 255, nullable = false)
     private String password;
 
+    /**
+     * Liste des amis de l'utilisateur.
+     * <p>
+     * Relation ManyToMany représentant les connexions entre utilisateurs.
+     */
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_relation",
@@ -31,16 +53,32 @@ public class User {
     )
     private List<User> friends = new ArrayList<>();
 
+    /**
+     * Liste des transactions envoyées par l'utilisateur.
+     */
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private List<Transaction> sentTransactions = new ArrayList<>();
 
+    /**
+     * Liste des transactions reçues par l'utilisateur.
+     */
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
     private List<Transaction> receivedTransactions = new ArrayList<>();
 
+    /**
+     * Constructeur par défaut.
+     */
     public User() {
 
     }
 
+    /**
+     * Constructeur permettant de créer l'utilisateur.
+     *
+     * @param username nom de l'utilisateur
+     * @param email adresse email de l'utilisateur
+     * @param password mot de passe de l'utilisateur
+     */
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;

@@ -18,6 +18,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Tests unitaires du contrôleur UserRelationController.
+ * <p>
+ * Vérifie la récupération des amis ainsi que l'ajout de nouvelles relations.
+ * Utilise MockMvc pour simuler les requêtes HTTP et Mockito pour simuler le service.
+ */
 @WebMvcTest(UserRelationController.class)
 @WithMockUser(username = "user@mail.com")
 public class UserRelationControllerTest {
@@ -28,7 +34,11 @@ public class UserRelationControllerTest {
     @MockitoBean
     private UserRelationService userRelationService;
 
-    //Test GET: getFriends happy path et retourne friends
+    /**
+     * Vérifie que la liste des amis est correctement retournée.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
     @Test
     void getFriends_shouldReturnFriends() throws Exception{
         User friend = new User("marco", "marco@mail.com", "7272");
@@ -44,7 +54,11 @@ public class UserRelationControllerTest {
         verify(userRelationService).getFriends("user@mail.com");
     }
 
-    //Test POST : addFriends happy path
+    /**
+     * Vérifie que la relation est correctement ajoutée.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
     @Test
     void addFriend_shouldAddFriends() throws Exception{
 
@@ -58,7 +72,11 @@ public class UserRelationControllerTest {
         verify(userRelationService).addFriend("user@mail.com", "friend@mail.com");
     }
 
-    //Test POST : lorsqu'ils sont déjà amis
+    /**
+     * Vérifie que la page erreur est affiché lors que les utilisateurs sont déjà amis.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
     @Test
     void addFriend_whenUsersAreAlreadyFriends_shouldReturnErrorPage() throws Exception {
 

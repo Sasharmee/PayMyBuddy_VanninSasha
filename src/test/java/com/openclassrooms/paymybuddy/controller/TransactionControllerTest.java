@@ -20,6 +20,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Tests unitaires du contrôleur TransactionController.
+ * <p>
+ * Vérifie l'affichage de l'historique des transactions ainsi que l'exécution des transactions.
+ * Utilise MockMvc pour simuler les requêtes HTTP et Mockito pour simuler le service.
+ */
 @WebMvcTest(TransactionController.class)
 @WithMockUser(username = "user@mail.com")
 public class TransactionControllerTest {
@@ -34,6 +40,9 @@ public class TransactionControllerTest {
     User receiver;
     Transaction transaction;
 
+    /**
+     * Initialisation des objets nécessaires à la réalisation des tests.
+     */
     @BeforeEach
     void setUp() {
         sender = new User();
@@ -49,7 +58,11 @@ public class TransactionControllerTest {
         transaction.setAmount(new BigDecimal("10"));
     }
 
-    //Test GET : happy path retourne liste des transactions faites et reçues
+    /**
+     * Vérifie que la page transfert affiche correctement l'historique des transactions.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
     @Test
     void transferPage_ShouldReturnTransactions() throws Exception {
 
@@ -67,7 +80,11 @@ public class TransactionControllerTest {
         verify(transactionService).getReceivedTransactions("user@mail.com");
     }
 
-    //Test POST: Happy path transaction réussie
+    /**
+     * Vérifie que le transfert s'effectue correctement et que la redirection vers la page de transfert a lieu.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
     @Test
     void transfer_shouldSendMoneyAndRedirectToTransferPage() throws Exception{
 
@@ -87,7 +104,13 @@ public class TransactionControllerTest {
                 new BigDecimal("10"));
     }
 
-    //Test POST: erreur lorsque le montant n'est pas strictement positif
+    /**
+     * Vérifie que lors que le montant de la transaction n'est pas strictement positif,
+     * le transfert ne s'effectue pas
+     * et l'utilisateur est redirigé vers la page erreur.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
     @Test
     void transfer_whenAmountNotStrictlyPositive_shouldReturnErrorPage() throws Exception{
 

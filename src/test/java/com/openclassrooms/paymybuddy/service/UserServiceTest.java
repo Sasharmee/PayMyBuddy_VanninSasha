@@ -17,6 +17,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * Tests unitaires du service UserService.
+ * <p>
+ * Vérifie la logique métier liée aux utilisateurs.
+ * Utilise Mockito pour isoler le service et simuler les dépendances.
+ */
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
@@ -31,13 +37,18 @@ public class UserServiceTest {
 
     private User user;
 
+    /**
+     * Initialisation des données de test.
+     */
     @BeforeEach
     void SetUp() {
         user = new User("marco", "marco@mail.com", "7272");
         user.setId(1);
     }
 
-    //Test happy path register
+    /**
+     * Vérifie qu'un utilisateur est correctement inscrit et enregistré.
+     */
     @Test
     void registerUser_whenDataAreValid_savesUser() {
         when(userRepository.findByEmail("marco@mail.com")).thenReturn(Optional.empty());
@@ -56,7 +67,9 @@ public class UserServiceTest {
         verify(passwordEncoder).encode("7272");
     }
 
-    //Test avec email déjà utilisé
+    /**
+     * Vérifie qu'une exception est levée lorsque l'email est déjà utilisé.
+     */
     @Test
     void registerUser_whenEmailIsAlreadyUsed_throwsException() {
         when(userRepository.findByEmail("marco@mail.com")).thenReturn(Optional.of(user));
@@ -70,7 +83,9 @@ public class UserServiceTest {
 
     }
 
-    //Test lorsque l'username est déjà utilisé
+    /**
+     * Vérifie qu'une exception est levée lorsque le nom d'utilisateur est déjà utilisé.
+     */
     @Test
     void registerUser_whenUsernameIsAlreadyUsed_throwsException() {
         when(userRepository.findByEmail("marco@mail.com")).thenReturn(Optional.empty());
@@ -85,7 +100,9 @@ public class UserServiceTest {
 
     }
 
-    //Test happy path update
+    /**
+     * Vérifie que la mise à jour est correctement effectuée.
+     */
     @Test
     void updateUserInformations_whenDataAreValid_updatesUserInformations() {
         when(userRepository.findByEmail("marco@mail.com")).thenReturn(Optional.of(user));
@@ -103,7 +120,9 @@ public class UserServiceTest {
         verify(passwordEncoder).encode("newPassword");
     }
 
-    //Test quand l'utilisateur à mettre à jour n'est pas retrouvé
+    /**
+     * Vérifie qu'une exception est levée lorsque l'utilisateur n'est pas retrouvé.
+     */
     @Test
     void updateUserInformations_whenUserIsNotFound_throwsException() {
         when(userRepository.findByEmail("marco@mail.com")).thenReturn(Optional.empty());
@@ -114,7 +133,9 @@ public class UserServiceTest {
         verify(userRepository, never()).save(any());
     }
 
-    //Test quand le nouveau username est déjà utilisé
+    /**
+     * Vérifie qu'une exception est levée lorsque le nom d'utilisateur est déjà utilisé.
+     */
     @Test
     void updateUserInformations_usernameIsAlreadyUsedByAnotherUser_throwsException() {
         User anotherUser = new User("other", "other@mail.com", "pw123");

@@ -11,17 +11,46 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Service gérant la logique métier des transactions.
+ * <p>
+ * Permet d'effectuer des transactions entre utilisateurs et de
+ * consulter l'historique des transactions reçues et effectuées.
+ *
+ */
 @Service
 public class TransactionService implements TransactionServiceInterface{
 
     private final UserRepository userRepository;
     private final TransactionRepository transactionRepository;
 
+    /**
+     * Constructeur du service de transactions.
+     *
+     * @param userRepository repository des utilisateurs
+     * @param transactionRepository repository des transactions
+     */
     public TransactionService(UserRepository userRepository, TransactionRepository transactionRepository) {
         this.userRepository = userRepository;
         this.transactionRepository = transactionRepository;
     }
 
+    /**
+     * Transfert d'argent d'un utilisateur à un autre.
+     * <p>
+     * Vérifie plusieurs règles métier :
+     * <ul>
+     *     <li>les utilisateurs existent</li>
+     *     <li>l'expéditeur et le destinataire sont différents</li>
+     *     <li>les utilisateurs sont liés (amis)</li>
+     *     <li>le montant est strictement positif</li>
+     * </ul>
+     *
+     * @param senderEmail email de l'expéditeur
+     * @param receiverEmail email du destinataire
+     * @param description description de la transaction
+     * @param amount montant de la transaction
+     */
     @Override
     @Transactional
     public void sendMoney(String senderEmail, String receiverEmail, String description, BigDecimal amount) {
@@ -49,6 +78,13 @@ public class TransactionService implements TransactionServiceInterface{
 
     }
 
+    /**
+     * Récupération des transactions effectuées par l'utilisateur.
+     *
+     * @param userMail email de l'utilisateur
+     * @return liste des transactions effectuées
+     * @throws IllegalArgumentException si l'utilisateur renseigné n'est pas trouvé
+     */
     @Override
     public List<Transaction> getSentTransactions(String userMail) {
         User user = userRepository.findByEmail(userMail)
@@ -57,6 +93,13 @@ public class TransactionService implements TransactionServiceInterface{
         return transactionRepository.findBySender(user);
     }
 
+    /**
+     * Récupération des transactions reçues par l'utilisateur.
+     *
+     * @param userMail email de l'utilisateur
+     * @return liste des transactions reçues
+     * @throws IllegalArgumentException si l'utilisateur renseigné n'est pas trouvé
+     */
     @Override
     public List<Transaction> getReceivedTransactions(String userMail) {
         User user = userRepository.findByEmail(userMail)
