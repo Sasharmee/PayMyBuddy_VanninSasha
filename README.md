@@ -50,9 +50,9 @@ spring.datasource.password=<votre_mot_de_passe>
 mvn spring-boot:run
 ````
 
-## Test
+## Tests
 ```Test
-mvn spring-boot:run
+mvn test
 ```
 
 ## Auteur
