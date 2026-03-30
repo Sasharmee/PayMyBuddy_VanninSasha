@@ -33,7 +33,7 @@ database/backup_paymybuddy.sql
 1. Exécution du script SQL
 database/backup_paymybuddy.sql
 
-2.Création d'un utilisateur MySQL
+2. Création d'un utilisateur MySQL
 
 3. Création d'utilisateurs de tests dans la base de données
 
