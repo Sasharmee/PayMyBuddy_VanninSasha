@@ -21,7 +21,7 @@ Le modèle physique de données décrit la structure de la base de données et l
 
 ## Diagramme MPD
 
-![MPD Diagram](docs/mdp_PayMyBuddy.png)
+![MPD Diagram](docs/mpd_PayMyBuddy.png)
 
 ## Base de données
 
