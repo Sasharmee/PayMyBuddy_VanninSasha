@@ -37,6 +37,21 @@ public class AuthController {
     }
 
     /**
+     * Traite la requête liée au formulaire de connexion (démonstration vérification mot de passe)
+     *
+     * @param email email de l'utilisateur
+     * @param password mot de passe de l'utilisateur
+     * @return le nom de la vue "test-login"
+     */
+    @PostMapping("/test-login")
+    public String testLogin(String email, String password) {
+
+        userService.login(email, password);
+
+        return "redirect:/profile";
+    }
+
+    /**
      * Affichage de la page de connexion
      *
      * @return le nom de la vue "register"

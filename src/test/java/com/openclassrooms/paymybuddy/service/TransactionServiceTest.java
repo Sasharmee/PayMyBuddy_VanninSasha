@@ -47,11 +47,11 @@ public class TransactionServiceTest {
      */
     @BeforeEach
     void setUp() {
-        sender = new User("sender" , "sender@mail.com", "1234");
+        sender = new User("sender" , "sender@mail.com", "1234", new BigDecimal("20"));
         sender.setId(1);
         sender.setFriends(new ArrayList<>());
 
-        receiver = new User("receiver", "receiver@mail.com", "5678");
+        receiver = new User("receiver", "receiver@mail.com", "5678", new BigDecimal("10"));
         receiver.setId(2);
         receiver.setFriends(new ArrayList<>());
 
@@ -62,13 +62,18 @@ public class TransactionServiceTest {
      * Vérifie qu'une transaction a correctement lieu et est enregistrée.
      */
     @Test
-    void sendMoney_whenDataAreValid_savesTransaction() {
+    void sendMoney_whenDataAreValid_savesTransactionAndUpdateBalances() {
+
         when(userRepository.findByEmail("sender@mail.com")).thenReturn(Optional.of(sender));
         when(userRepository.findByEmail("receiver@mail.com")).thenReturn(Optional.of(receiver));
 
-        transactionService.sendMoney("sender@mail.com", "receiver@mail.com","test", BigDecimal.TEN);
+        transactionService.sendMoney("sender@mail.com", "receiver@mail.com","test", new BigDecimal("5"));
+
+        assertEquals(new BigDecimal("15"), sender.getBalance());
+        assertEquals(new BigDecimal("15"), receiver.getBalance());
 
         verify(transactionRepository).save(any(Transaction.class));
+        verify(userRepository, times(2)).save(any(User.class));
     }
 
     /**
@@ -129,6 +134,26 @@ public class TransactionServiceTest {
 
         assertEquals("Amount must be strictly positive", exception.getMessage());
         verify(transactionRepository, never()).save(any());
+    }
+
+    /**
+     * Vérifie qu'une exception est levée lorsque le solde du compte de l'expéditeur n'est pas suffisant
+     */
+    @Test
+    void sendMoney_whenBalanceIsNotSufficient_throwsException() {
+
+        sender.setBalance(new BigDecimal("5"));
+
+        when(userRepository.findByEmail("sender@mail.com")).thenReturn(Optional.of(sender));
+        when(userRepository.findByEmail("receiver@mail.com")).thenReturn(Optional.of(receiver));
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                transactionService.sendMoney("sender@mail.com", "receiver@mail.com", "test", new BigDecimal("10"))
+        );
+
+        assertEquals("Insufficient balance", exception.getMessage());
+        verify(transactionRepository, never()).save(any());
+
     }
 
     /**

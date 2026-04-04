@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -40,10 +41,10 @@ public class UserRelationServiceTest {
      */
     @BeforeEach
     void setUp(){
-        currentUser = new User("currentUser", "currentUser@mail.com", "1234");
+        currentUser = new User("currentUser", "currentUser@mail.com", "1234", new BigDecimal("20"));
         currentUser.setId(1);
         currentUser.setFriends(new ArrayList<>());
-        friend = new User("friend", "friend@mail.com", "1111");
+        friend = new User("friend", "friend@mail.com", "1111", new BigDecimal("20"));
         friend.setId(2);
         friend.setFriends(new ArrayList<>());
     }

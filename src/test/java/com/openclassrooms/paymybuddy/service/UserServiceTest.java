@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -42,7 +43,7 @@ public class UserServiceTest {
      */
     @BeforeEach
     void SetUp() {
-        user = new User("marco", "marco@mail.com", "7272");
+        user = new User("marco", "marco@mail.com", "7272", new BigDecimal("20"));
         user.setId(1);
     }
 
@@ -101,6 +102,47 @@ public class UserServiceTest {
     }
 
     /**
+     * Vérifie qu'un utilisateur se connecte en renseignant les bonnes informations
+     */
+    @Test
+    void login_whenCredentialsAreValid_shouldReturnUser() {
+        User user = new User("marco", "marco@mail.com", "hashedPassword", new BigDecimal("20"));
+        when(userRepository.findByEmail("marco@mail.com")).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches("7272", "hashedPassword")).thenReturn(true);
+
+        User result = userService.login("marco@mail.com", "7272");
+
+        assertEquals(user, result);
+    }
+
+    /**
+     * Vérifie qu'une exception est levée lorsque l'utilisateur n'est pas trouvé
+     */
+    @Test
+    void login_whenUserIsNotFound_shouldThrowException() {
+
+        when(userRepository.findByEmail("unknow@mail.com")).thenReturn(Optional.empty());
+
+        Exception exception =assertThrows(IllegalArgumentException.class, () ->
+                userService.login("unknow@mail.com", "pwd"));
+
+        assertEquals("User not found" , exception.getMessage());
+    }
+
+    @Test
+    void login_whenPasswordIsIncorrect_shouldThrowException() {
+        User user = new User("marco", "marco@mail.com", "hashedPassword", new BigDecimal("20"));
+        when(userRepository.findByEmail("marco@mail.com")).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches("wrongPwd", "hashedPassword")).thenReturn(false);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                userService.login("marco@mail.com", "wrongPwd")
+        );
+
+        assertEquals("Invalid password", exception.getMessage());
+    }
+
+    /**
      * Vérifie que la mise à jour est correctement effectuée.
      */
     @Test
@@ -138,7 +180,7 @@ public class UserServiceTest {
      */
     @Test
     void updateUserInformations_usernameIsAlreadyUsedByAnotherUser_throwsException() {
-        User anotherUser = new User("other", "other@mail.com", "pw123");
+        User anotherUser = new User("other", "other@mail.com", "pw123", new BigDecimal("20"));
         anotherUser.setId(2);
 
         when(userRepository.findByEmail("marco@mail.com")).thenReturn(Optional.of(user));

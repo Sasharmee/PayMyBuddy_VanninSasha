@@ -10,6 +10,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -41,7 +42,7 @@ public class UserRelationControllerTest {
      */
     @Test
     void getFriends_shouldReturnFriends() throws Exception{
-        User friend = new User("marco", "marco@mail.com", "7272");
+        User friend = new User("marco", "marco@mail.com", "7272", new BigDecimal("20"));
 
         when(userRelationService.getFriends("user@mail.com"))
                 .thenReturn(List.of(friend));

@@ -22,6 +22,16 @@ public interface UserAccountManagementInterface {
     User registerUser(String username, String email, String password);
 
     /**
+     * Authentifie un utilisateur en vérifiant son email et son mot de passe.
+     *
+     * @param email email de l'utilisateur
+     * @param rawPassword mot de passe saisi (non chiffré)
+     * @return l'utilisateur authentifié
+     * @throws IllegalArgumentException si les identifiants sont invalides
+     */
+    User login(String email, String rawPassword);
+
+    /**
      * Mise à jour des informations de l'utilisateur.
      *
      * @param username nom d'utilisateur

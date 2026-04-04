@@ -2,6 +2,7 @@ package com.openclassrooms.paymybuddy.entity;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,20 +26,26 @@ public class User {
     /**
      * Nom de l'utilisateur unique.
      */
-    @Column(length = 100,unique = true, nullable = false)
+    @Column(length = 50,unique = true, nullable = false)
     private String username;
 
     /**
      * Adresse mail unique de l'utilisateur.
      */
-    @Column(length = 255,unique = true, nullable = false)
+    @Column(length = 50,unique = true, nullable = false)
     private String email;
 
     /**
      * Mot de passe de l'utilisateur.
      */
-    @Column(length = 255, nullable = false)
+    @Column(length = 100, nullable = false)
     private String password;
+
+    /**
+     * Solde du compte de l'utilisateur
+     */
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal balance;
 
     /**
      * Liste des amis de l'utilisateur.
@@ -78,11 +85,13 @@ public class User {
      * @param username nom de l'utilisateur
      * @param email adresse email de l'utilisateur
      * @param password mot de passe de l'utilisateur
+     * @param balance solde du compte de l'utilisateur
      */
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, BigDecimal balance) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.balance = balance;
     }
 
     public Integer getId() {
@@ -99,6 +108,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
     }
 
     public List<User> getFriends() {
@@ -127,6 +140,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     public void setFriends(List<User> friends) {

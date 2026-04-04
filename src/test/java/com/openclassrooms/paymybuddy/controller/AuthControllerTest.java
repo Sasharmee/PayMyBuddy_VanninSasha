@@ -49,6 +49,37 @@ public class AuthControllerTest {
     }
 
     /**
+     * Vérifie que lorsqu'il y a une erreur dans les paramètres,
+     * l'utilisateur est renvoyé vers une page login.
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
+    @Test
+    void login_whenErrorParameter_shouldDisplayError() throws Exception {
+
+        mockMvc.perform(get("/login?error"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("login"));
+    }
+
+    /**
+     * Vérifie que lorsqu'un utilisateur renseigne les bons paramètres login,
+     * alors il est connecté (démonstration).
+     *
+     * @throws Exception en cas d'erreur lors de la requête
+     */
+    @Test
+    void testLogin_whenValid_shouldReturnSuccess() throws Exception {
+
+        mockMvc.perform(post("/test-login")
+                        .param("email", "marco@mail.com")
+                        .param("password", "7272"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/profile"));
+
+    }
+
+    /**
      * Vérification que la page d'inscription s'affiche correctement.
      *
      * @throws Exception en cas d'erreur lors de la requête

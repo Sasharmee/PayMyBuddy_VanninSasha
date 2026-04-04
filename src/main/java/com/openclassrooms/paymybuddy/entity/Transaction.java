@@ -26,7 +26,7 @@ public class Transaction {
     /**
      * Description associée à la transaction.
      */
-    @Column(length = 255, nullable = false)
+    @Column(length = 100, nullable = false)
     private String description;
 
     /**

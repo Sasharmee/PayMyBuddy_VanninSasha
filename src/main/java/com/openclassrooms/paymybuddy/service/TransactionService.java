@@ -40,10 +40,11 @@ public class TransactionService implements TransactionServiceInterface{
      * <p>
      * Vérifie plusieurs règles métier :
      * <ul>
-     *     <li>les utilisateurs existent</li>
-     *     <li>l'expéditeur et le destinataire sont différents</li>
-     *     <li>les utilisateurs sont liés (amis)</li>
-     *     <li>le montant est strictement positif</li>
+     *     <li>Les utilisateurs existent</li>
+     *     <li>L'expéditeur et le destinataire sont différents</li>
+     *     <li>Les utilisateurs sont liés (amis)</li>
+     *     <li>Le montant est strictement positif</li>
+     *     <li>L'expéditeur doit disposer d'un solde suffisant</li>
      * </ul>
      *
      * @param senderEmail email de l'expéditeur
@@ -67,6 +68,13 @@ public class TransactionService implements TransactionServiceInterface{
         if (amount.compareTo(BigDecimal.ZERO)<=0){
             throw new IllegalArgumentException("Amount must be strictly positive");}
 
+        if (sender.getBalance().compareTo(amount)<0) {
+            throw  new IllegalArgumentException("Insufficient balance");
+        }
+
+        sender.setBalance(sender.getBalance().subtract(amount));
+        receiver.setBalance(receiver.getBalance().add(amount));
+
         Transaction transaction = new Transaction();
         transaction.setSender(sender);
         transaction.setReceiver(receiver);
@@ -75,6 +83,9 @@ public class TransactionService implements TransactionServiceInterface{
         transaction.setCreatedAt(LocalDateTime.now());
 
         transactionRepository.save(transaction);
+
+        userRepository.save(sender);
+        userRepository.save(receiver);
 
     }
 

@@ -4,12 +4,12 @@ import com.openclassrooms.paymybuddy.entity.User;
 import com.openclassrooms.paymybuddy.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -42,7 +42,7 @@ public class UserControllerTest {
     @Test
     void profile_shouldReturnProfilePage() throws Exception{
 
-        User user = new User("user", "user@mail.com", "7272");
+        User user = new User("user", "user@mail.com", "7272", new BigDecimal("20"));
 
         when(userService.findByEmail("user@mail.com")).thenReturn(Optional.of(user));
 

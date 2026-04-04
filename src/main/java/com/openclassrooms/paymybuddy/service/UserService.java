@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
@@ -81,10 +82,32 @@ public class UserService implements UserAccountManagementInterface{
 
         String encodedPassword = passwordEncoder.encode(password);
 
-        User newUser = new User(username, email, encodedPassword);
+        User newUser = new User(username, email, encodedPassword, new BigDecimal("20"));
 
         return userRepository.save(newUser);
     }
+
+    /**
+     * Authentifie un utilisateur en vérifiant son email et son mot de passe.
+     *
+     * @param email email de l'utilisateur
+     * @param rawPassword mot de passe saisi (non chiffré)
+     * @return l'utilisateur authentifié
+     * @throws IllegalArgumentException si les identifiants sont invalides
+     */
+    @Override
+    public User login(String email, String rawPassword) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+            throw new IllegalArgumentException("Invalid password");
+        }
+
+        return user;
+    }
+
 
     /**
      * Met à jour les informations d'un utilisateur existant.
